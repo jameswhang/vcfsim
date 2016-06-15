@@ -19,25 +19,28 @@ int main() {
     int twoinone = 0;
     int twonotinone = 0;
 
-    for (auto &kv : vcf1) {
-        for (auto &v : kv.second) {
-            if (binary_search(vcf2[kv.first].begin(), vcf2[kv.first].end(), v)) {
+    typedef map<string, vector<int>>::iterator it;
+    typedef vector<int>::iterator vit;
+
+    for (it i = vcf1.begin(); i != vcf1.end(); i++) {
+        for (vit v = i->second.begin(); v != i->second.end(); v++) {
+            if (binary_search(vcf2[i->first].begin(), vcf2[i->first].end(), v)) {
                 oneintwo++;
             } else {
                 onenotintwo++;
             }
         }
     }
-    for (auto &kv : vcf2) {
-        for (auto &v : kv.second) {
-            if (binary_search(vcf1[kv.first].begin(), vcf1[kv.first].end(), v)) {
+
+    for (it i = vcf2.begin(); i != vcf2.end(); i++) {
+        for (vit v = i->second.begin(); v != i->second.end(); v++) {
+            if (binary_search(vcf1[i->first].begin(), vcf1[i->first].end(), v)) {
                 twoinone++;
             } else {
                 twonotinone++;
             }
         }
     }
-
 
     cout << "# of lines of vcf1 in vcf2: " << oneintwo << endl;
     cout << "# of lines of vcf1 not in vcf2: " << onenotintwo << endl;
