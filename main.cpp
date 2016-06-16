@@ -1,6 +1,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <algorithm>
 #include "vcfparser.h"
 
 using namespace std;
