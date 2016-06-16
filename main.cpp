@@ -5,14 +5,22 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char * argv[]) {
+
+    if (argc < 3) {
+        cout << "Usage: vcfsim [path to vcf 1] [path to vcf 2]" << endl;
+        exit(1);
+    }
+
+    string vcf1_path = argv[1];
+    string vcf2_path = argv[2];
+
     vcfparser parser;
     map<string, vector<int>> vcf1;
     map<string, vector<int>> vcf2;
 
-    parser.readfile("/Users/jameswhang/ClionProjects/vcf-sim/SSHR1T_normal.haplotype.vcf", &vcf1);
-    parser.readfile("/Users/jameswhang/ClionProjects/vcf-sim/SSHR1T_tumor.haplotype.vcf", &vcf2);
-
+    parser.readfile(vcf1_path, &vcf1);
+    parser.readfile(vcf2_path, &vcf2);
 
     int oneintwo = 0;
     int onenotintwo = 0;
@@ -24,7 +32,7 @@ int main() {
 
     for (it i = vcf1.begin(); i != vcf1.end(); i++) {
         for (vit v = i->second.begin(); v != i->second.end(); v++) {
-            if (binary_search(vcf2[i->first].begin(), vcf2[i->first].end(), v)) {
+            if (binary_search(vcf2[i->first].begin(), vcf2[i->first].end(), *v)) {
                 oneintwo++;
             } else {
                 onenotintwo++;
@@ -34,7 +42,7 @@ int main() {
 
     for (it i = vcf2.begin(); i != vcf2.end(); i++) {
         for (vit v = i->second.begin(); v != i->second.end(); v++) {
-            if (binary_search(vcf1[i->first].begin(), vcf1[i->first].end(), v)) {
+            if (binary_search(vcf1[i->first].begin(), vcf1[i->first].end(), *v)) {
                 twoinone++;
             } else {
                 twonotinone++;
