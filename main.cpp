@@ -3,12 +3,13 @@
 #include <vector>
 #include <algorithm>
 #include "vcfparser.h"
+#include "Vcfstruct.h"
 
 using namespace std;
 
 int main(int argc, char * argv[]) {
 
-    if (argc < 3) {
+    if (argc != 3) {
         cout << "Usage: vcfsim [path to vcf 1] [path to vcf 2]" << endl;
         exit(1);
     }
@@ -17,11 +18,12 @@ int main(int argc, char * argv[]) {
     string vcf2_path = argv[2];
 
     vcfparser parser;
-    map<string, vector<int>> vcf1;
-    map<string, vector<int>> vcf2;
 
-    parser.readfile(vcf1_path, &vcf1);
-    parser.readfile(vcf2_path, &vcf2);
+    vcfStruct vcf1;
+    vcfStruct vcf2;
+
+    parser.readfile(vcf1_path, &vcf1.info);
+    parser.readfile(vcf2_path, &vcf2.info);
 
     int oneintwo = 0;
     int onenotintwo = 0;
